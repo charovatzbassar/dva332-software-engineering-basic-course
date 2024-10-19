@@ -66,8 +66,8 @@ public class Account implements IAccount {
     }
 
     public Account(BigDecimal starting_balance, String currency, BigDecimal max_overdrawn) {
-        // checks if the balance is greater than -1*max_overdrawn value
-        this.balance = starting_balance.compareTo(max_overdrawn.multiply(new BigDecimal(-1))) < 0 ? BigDecimal.ZERO : starting_balance;
+        // checks if the balance is greater than 0
+        this.balance = starting_balance.compareTo(BigDecimal.ZERO) < 0 ? BigDecimal.ZERO : starting_balance;
         // checks if the currency is valid
         this.currency = this.currencies.contains(currency) ? currency : "SEK";
         // Rewritten it using the ternary operator
@@ -107,15 +107,16 @@ public class Account implements IAccount {
     }
 
     @Override
-    public void convertToCurrency(String currencyCode, double rate) {
+    public boolean convertToCurrency(String currencyCode, double rate) {
         /*
         Before the conversion, the currency code must be valid, and the rate must be greater than 0.
         Also, the balance attribute was not updated, so that was also implemented.
          */
-        if (rate <= 0 || !this.currencies.contains(currencyCode)) return;
+        if (rate <= 0 || !this.currencies.contains(currencyCode)) return false;
 
         this.currency = currencyCode;
         this.balance = this.balance.multiply(new BigDecimal(rate));
+        return true;
     }
 
     @Override

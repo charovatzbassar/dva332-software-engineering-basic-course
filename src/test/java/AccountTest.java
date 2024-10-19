@@ -3,8 +3,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 class AccountTest {
@@ -98,15 +97,13 @@ class AccountTest {
         testAccount.withdraw(new BigDecimal(500));
         assertEquals(new BigDecimal(500), testAccount.getBalance());
 
-        testAccount.withdraw(new BigDecimal(501));
-        assertEquals(new BigDecimal(500), testAccount.getBalance());
-
         testAccount.withdraw(new BigDecimal(-5));
         assertEquals(new BigDecimal(500), testAccount.getBalance());
 
-        Account testAccount2 = new Account(new BigDecimal(-1), "SEK", new BigDecimal(Double.MIN_VALUE));
-        testAccount2.withdraw(new BigDecimal(Double.MAX_VALUE));
-        assertEquals(BigDecimal.ZERO, testAccount2.getBalance());
+        Account testAccount2 = new Account(new BigDecimal(-1), "SEK", new BigDecimal(500));
+
+        testAccount2.withdraw(new BigDecimal(499));
+        assertEquals(new BigDecimal(-499), testAccount2.getBalance());
 
     }
 

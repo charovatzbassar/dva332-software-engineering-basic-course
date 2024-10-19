@@ -26,7 +26,7 @@ public interface IAccount {
      * the method returns true if the conversion has been performed
      * false if the conversion fails
      * */
-    public abstract void convertToCurrency(String currency_code, double rate);
+    public abstract boolean convertToCurrency(String currency_code, double rate);
 
     /*
      * Method that makes transfer from one account to another.
